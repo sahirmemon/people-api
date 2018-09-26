@@ -3,6 +3,7 @@ const httpStatus = require('http-status');
 const chai = require('chai'); // eslint-disable-line import/newline-after-import
 const expect = chai.expect;
 const app = require('../../index');
+const helper = require('./people.helper');
 
 chai.config.includeStack = true;
 
@@ -56,6 +57,20 @@ describe('## People APIs', () => {
           done();
         })
         .catch(done);
+    });
+  });
+
+  describe('Test Frequency Count', () => {
+    it('Count should be equal', (done) => {
+      const test = [{ email_address: 'a@a.a' }];
+      const shouldReturn = {
+        a: 3,
+        '@': 1,
+        '.': 1
+      };
+      const result = helper.getFrequencyCount(test);
+      expect(result).to.deep.equal(shouldReturn);
+      done();
     });
   });
 });

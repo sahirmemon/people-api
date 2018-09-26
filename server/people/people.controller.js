@@ -1,6 +1,7 @@
 const httpStatus = require('http-status');
 const Person = require('./people.model');
 const request = require('./people.request');
+const helper = require('./people.helper');
 
 /**
  * Get all people
@@ -36,4 +37,16 @@ function get(req, res) {
     .catch(err => res.status(err.statusCode).json(err.error));
 }
 
-module.exports = { getAll, get, };
+function getFrequencyCount(req, res) {
+  request.getAll()
+    .then((people) => {
+      if (people && people.data) {
+        const frequencyData = helper.getFrequencyCount(people.data);
+        return res.json(frequencyData);
+      }
+      return res.status(httpStatus.NO_CONTENT).json({ message: 'No data' });
+    })
+    .catch(err => res.status(err.statusCode).json(err.error));
+}
+
+module.exports = { getAll, get, getFrequencyCount };

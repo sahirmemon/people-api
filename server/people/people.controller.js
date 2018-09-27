@@ -5,10 +5,13 @@ const helper = require('./people.helper');
 
 /**
  * Get all people
- * @returns {Person}
+ * @property {number} req.query.page - Page number for the list of people to return
+ * @property {number} req.query.perPage - Number of people to return per page
+ * @returns {Person}[]
  */
 function getAll(req, res) {
-  request.getAll()
+  const { page = 1, perPage = 100 } = req.query;
+  request.getAll({ page, perPage })
     .then((people) => {
       if (people && people.data) {
         const transformedPeople = people.data.map(person => Person.getTransformed(person));
@@ -21,7 +24,7 @@ function getAll(req, res) {
 
 /**
  * Get a single person
- * @param id
+ * @param {number} req.params.id - ID of the person to search
  * @returns {Person}
  */
 function get(req, res) {
@@ -39,9 +42,13 @@ function get(req, res) {
 
 /**
  * Get frequency count of all character in email addresses
+ * @property {number} req.query.page - Page number for the list of people to return
+ * @property {number} req.query.perPage - Number of people to return per page
+ * @return {{Character:Count}}
  */
 function getFrequencyCount(req, res) {
-  request.getAll()
+  const { page = 1, perPage = 100 } = req.query;
+  request.getAll({ page, perPage })
     .then((people) => {
       if (people && people.data) {
         const frequencyData = helper.getFrequencyCount(people.data);
@@ -54,9 +61,13 @@ function getFrequencyCount(req, res) {
 
 /**
  * Get possible duplicates of people by observing their email addresses
+ * @property {number} req.query.page - Page number for the list of people to return
+ * @property {number} req.query.perPage - Number of people to return per page
+ * @returns {[Person1, Person2]}[]
  */
 function getDuplicates(req, res) {
-  request.getAll()
+  const { page = 1, perPage = 100 } = req.query;
+  request.getAll({ page, perPage })
     .then((people) => {
       if (people && people.data) {
         const duplicates = helper.findDuplicates(people.data);

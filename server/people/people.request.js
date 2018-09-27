@@ -10,9 +10,9 @@ function getHeaders() {
 }
 
 // Get all people from People API
-function getAll() {
+function getAll(queryParams) {
   const options = {
-    uri: `${config.apiUrl}/v2/people.json`,
+    uri: `${config.apiUrl}/v2/people.json?page=${queryParams.page}&per_page=${queryParams.perPage}`,
     headers: getHeaders(),
     json: true,
   };

@@ -16,9 +16,10 @@ const envVarsSchema = Joi.object({
   SALESLOFT_API_KEY: Joi.string()
     .required()
     .description('SalesLoft API key is required.'),
-  API_KEY: Joi.string()
+  API_SECRET: Joi.string()
     .required()
-    .description('API key is required.'),
+    .description('API secret is required.'),
+  API_KEY: Joi.string(),
 }).unknown()
   .required();
 
@@ -32,7 +33,8 @@ const config = {
   port: envVars.PORT,
   apiUrl: envVars.SALESLOFT_API_URL,
   apiKey: envVars.SALESLOFT_API_KEY,
-  appApiKey: envVars.API_KEY,
+  apiSecret: envVars.API_SECRET,
+  testingApiKey: envVars.API_KEY,
 };
 
 module.exports = config;

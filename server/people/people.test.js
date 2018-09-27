@@ -4,6 +4,7 @@ const chai = require('chai'); // eslint-disable-line import/newline-after-import
 const expect = chai.expect;
 const app = require('../../index');
 const helper = require('./people.helper');
+const config = require('../../config/config');
 
 chai.config.includeStack = true;
 
@@ -22,7 +23,7 @@ describe('## People APIs', () => {
     jobTitle: 'Direct Security Representative'
   };
 
-  const token = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJlYWN0IiwiaWF0IjoxNTM4MDYwOTIxfQ.NBznlabQeGJiHD2VuZDLqdH7F2isQUq7KCNNsZD3Gt8';
+  const token = `Bearer ${config.testingApiKey}`;
 
   describe('# GET /api/people/:id', () => {
     it('should get person details', (done) => {

@@ -14,6 +14,10 @@ router.route('/frequency-count')
    * characters in all email addresses */
   .get(peopleCtrl.getFrequencyCount);
 
+router.route('/duplicates')
+/** GET /api/people/duplicates - Get possible duplicates */
+.get(peopleCtrl.getDuplicates);
+
 router.route('/:id')
   /** GET /api/people/:id - Get person */
   .get(validate(paramValidation.getPerson), peopleCtrl.get);

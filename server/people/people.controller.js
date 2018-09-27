@@ -37,6 +37,9 @@ function get(req, res) {
     .catch(err => res.status(err.statusCode).json(err.error));
 }
 
+/**
+ * Get frequency count of all character in email addresses
+ */
 function getFrequencyCount(req, res) {
   request.getAll()
     .then((people) => {
@@ -49,4 +52,23 @@ function getFrequencyCount(req, res) {
     .catch(err => res.status(err.statusCode).json(err.error));
 }
 
-module.exports = { getAll, get, getFrequencyCount };
+/**
+ * Get possible duplicates of people by observing their email addresses
+ */
+function getDuplicates(req, res) {
+  request.getAll()
+    .then((people) => {
+      if (people && people.data) {
+        const duplicates = helper.findDuplicates(people.data);
+        console.log(duplicates);
+        return res.json(duplicates);
+      }
+      return res.status(httpStatus.NO_CONTENT).json({ message: 'No data' });
+    })
+    .catch((err) => {
+      console.log(err);
+      return res.status(err.statusCode).json(err.error);
+    });
+}
+
+module.exports = { getAll, get, getFrequencyCount, getDuplicates };

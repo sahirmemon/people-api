@@ -73,4 +73,48 @@ describe('## People APIs', () => {
       done();
     });
   });
+
+  describe('Test Duplicates', () => {
+    it('People should be duplicate', (done) => {
+      const test = [{ email_address: 'sahir@memon.com' }, { email_address: 'sahir@memon.com' }];
+      const shouldReturn = [
+        [
+          {
+            email_address: 'sahir@memon.com'
+          },
+          {
+            email_address: 'sahir@memon.com'
+          }
+        ]
+      ];
+      const result = helper.findDuplicates(test);
+      expect(result).to.deep.equal(shouldReturn);
+      done();
+    });
+
+    it('People should be possible duplicates', (done) => {
+      const test = [{ email_address: 'sahir@memon.com' }, { email_address: 'sahir@memo.com' }];
+      const shouldReturn = [
+        [
+          {
+            email_address: 'sahir@memon.com'
+          },
+          {
+            email_address: 'sahir@memo.com'
+          }
+        ]
+      ];
+      const result = helper.findDuplicates(test);
+      expect(result).to.deep.equal(shouldReturn);
+      done();
+    });
+
+    it('People should not be duplicates', (done) => {
+      const test = [{ email_address: 'sahir@memon.com' }, { email_address: 'john@williams.com' }];
+      const shouldReturn = [];
+      const result = helper.findDuplicates(test);
+      expect(result).to.deep.equal(shouldReturn);
+      done();
+    });
+  });
 });

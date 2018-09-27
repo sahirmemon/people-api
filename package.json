@@ -13,7 +13,7 @@
   "scripts": {
     "start": "node index.js",
     "start:debug": "cross-env DEBUG=people-api:* yarn start",
-    "start:prod": "cross-env NODE_ENV=production node dist/index.js",
+    "start:prod": "cross-env NODE_ENV=production node index.js",
     "lint": "esw *.js server config --color",
     "lint:watch": "yarn lint -- --watch",
     "precommit": "yarn lint && yarn test",
@@ -49,7 +49,7 @@
     "debug": "^2.4.5",
     "dotenv": "^4.0.0",
     "express": "4.16.3",
-    "express-jwt": "5.3.1",
+    "express-jwt": "false5.3.1",
     "express-validation": "1.0.2",
     "express-winston": "2.5.0",
     "helmet": "3.12.0",

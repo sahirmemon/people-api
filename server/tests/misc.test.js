@@ -25,8 +25,7 @@ describe('## Misc', () => {
       request(app)
         .get('/api/404')
         .expect(httpStatus.NOT_FOUND)
-        .then((res) => {
-          expect(res.body.message).to.equal('Not Found');
+        .then(() => {
           done();
         })
         .catch(done);

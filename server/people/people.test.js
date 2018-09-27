@@ -22,10 +22,13 @@ describe('## People APIs', () => {
     jobTitle: 'Direct Security Representative'
   };
 
+  const token = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJlYWN0IiwiaWF0IjoxNTM4MDYwOTIxfQ.NBznlabQeGJiHD2VuZDLqdH7F2isQUq7KCNNsZD3Gt8';
+
   describe('# GET /api/people/:id', () => {
     it('should get person details', (done) => {
       request(app)
         .get(`/api/people/${person.id}`)
+        .set('Authorization', token)
         .expect(httpStatus.OK)
         .then((res) => {
           expect(res.body.name).to.equal(person.name);
@@ -38,6 +41,7 @@ describe('## People APIs', () => {
     it('should report error with message - Not found, when user does not exists', (done) => {
       request(app)
         .get('/api/people/12312414')
+        .set('Authorization', token)
         .expect(httpStatus.NOT_FOUND)
         .then((res) => {
           expect(res.body.error).to.equal('Not found');
@@ -51,6 +55,30 @@ describe('## People APIs', () => {
     it('should get all people', (done) => {
       request(app)
         .get('/api/people')
+        .set('Authorization', token)
+        .expect(httpStatus.OK)
+        .then((res) => {
+          expect(res.body).to.be.an('array');
+          done();
+        })
+        .catch(done);
+    });
+
+    it('should fail to get people because of wrong token', (done) => {
+      request(app)
+        .get('/api/people')
+        .set('Authorization', 'Bearer inValidToken')
+        .expect(httpStatus.UNAUTHORIZED)
+        .then(() => {
+          done();
+        })
+        .catch(done);
+    });
+
+    it('should get people', (done) => {
+      request(app)
+        .get('/api/people')
+        .set('Authorization', token)
         .expect(httpStatus.OK)
         .then((res) => {
           expect(res.body).to.be.an('array');

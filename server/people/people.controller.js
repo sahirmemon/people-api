@@ -60,15 +60,11 @@ function getDuplicates(req, res) {
     .then((people) => {
       if (people && people.data) {
         const duplicates = helper.findDuplicates(people.data);
-        console.log(duplicates);
         return res.json(duplicates);
       }
       return res.status(httpStatus.NO_CONTENT).json({ message: 'No data' });
     })
-    .catch((err) => {
-      console.log(err);
-      return res.status(err.statusCode).json(err.error);
-    });
+    .catch(err => res.status(err.statusCode).json(err.error));
 }
 
 module.exports = { getAll, get, getFrequencyCount, getDuplicates };
